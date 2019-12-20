@@ -75,7 +75,7 @@ namespace Hangman
                     playerWon = true;
             }
 
-            if (playerWon = true)
+            if (playerWon == true)
             {
                 Console.WriteLine($"YOU WON! {playerTwoName}'s word was:");
                 for (int i = 0; i < answerPreview.Length; i++)
