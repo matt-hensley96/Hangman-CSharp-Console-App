@@ -5,12 +5,14 @@ namespace Hangman
     class Program
     {
         static void Main(string[] args)
-        // TO DO: Add an ASCI UI as suggested in the email
+        // IN PROGRESS: Show the hangman using ASCII characters (see Artist class)
+        // TO DO: Obscure the letters in the secret word (as the user types them) using * characters (like a password)
+        // TO DO: Make a 1-player option?
         {
             Presenter.Greeting();
 
             // Initialise anything needed later
-            int livesRemaining = 9;
+            int livesRemaining = 8;
             bool playerWon = false;
 
             // Store the names of the two players
@@ -28,8 +30,8 @@ namespace Hangman
             Console.WriteLine();
             Console.WriteLine($"{playerOneName}, type a secret word, then hit Enter. It must be one word, containing letters only (less than 10).");
             string secretWordInput = Console.ReadLine().ToUpper();
-            // TO DO: Obscure the letters in the secret word (as the user types them) using * characters (like a password)
             string secretWord = Validator.GetValidSecretWord(secretWordInput);
+
             // Create an array of dashes, the length of the secret word
             char[] answerPreview = new char[secretWord.Length];
             for (int i = 0; i < answerPreview.Length; i++)
@@ -53,6 +55,8 @@ namespace Hangman
                     Console.Write(answerPreview[i] + " ");
                 }
                 Console.WriteLine();
+
+                Artist.PaintMan(livesRemaining);
 
                 // Store the guess
                 char guess = Console.ReadKey().KeyChar;
@@ -84,11 +88,13 @@ namespace Hangman
                 }
                 Console.WriteLine();
             }
+
             else
             {
                 Console.WriteLine();
                 Console.WriteLine("GAME OVER!!! YOU RAN OUT OF LIVES!");
                 Console.WriteLine();
+                Artist.PaintMan(0);
             }
         }
     }
