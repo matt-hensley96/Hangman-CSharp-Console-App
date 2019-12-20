@@ -47,7 +47,6 @@ namespace Hangman
                 return false;
             }
 
-            Console.WriteLine();
             Console.WriteLine("CORRECT!");
             return true;
         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Code\\Projects\\Hangman\\Hangman\\Hangman.csproj": {}
+    "C:\\Code\\Projects\\4. Hangman\\Hangman\\Hangman.csproj": {}
   },
   "projects": {
-    "C:\\Code\\Projects\\Hangman\\Hangman\\Hangman.csproj": {
+    "C:\\Code\\Projects\\4. Hangman\\Hangman\\Hangman.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Code\\Projects\\Hangman\\Hangman\\Hangman.csproj",
+        "projectUniqueName": "C:\\Code\\Projects\\4. Hangman\\Hangman\\Hangman.csproj",
         "projectName": "Hangman",
-        "projectPath": "C:\\Code\\Projects\\Hangman\\Hangman\\Hangman.csproj",
+        "projectPath": "C:\\Code\\Projects\\4. Hangman\\Hangman\\Hangman.csproj",
         "packagesPath": "C:\\Users\\mhensley\\.nuget\\packages\\",
-        "outputPath": "C:\\Code\\Projects\\Hangman\\Hangman\\obj\\",
+        "outputPath": "C:\\Code\\Projects\\4. Hangman\\Hangman\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
