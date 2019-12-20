@@ -5,7 +5,7 @@ namespace Hangman
     class Program
     {
         static void Main(string[] args)
-        // IN PROGRESS: Obscure the letters in the secret word (as the user types them) using * characters (like a password)
+        // TO DO: Clean up main method 
         // TO DO: Make a 1-player option?
         {
             Presenter.Greeting();
@@ -22,10 +22,9 @@ namespace Hangman
             Console.WriteLine("Player 2, enter your name, then hit Enter.");
             string playerTwoName = Console.ReadLine();
 
-            // Store the secret word
+            // Ask the player for the word, obscure it while typing, validate it, then store it.
             Console.WriteLine();
             Console.WriteLine($"{playerOneName}, type a secret word, then hit Enter. It must be one word, containing letters only (less than 10).");
-            
             
             string secretWordInput = null;
             while (true)
@@ -33,28 +32,27 @@ namespace Hangman
                 var key = System.Console.ReadKey(true);
                 if (key.Key == ConsoleKey.Enter)
                     break;
-                Console.Write("*");
+                if (key.Key != ConsoleKey.Backspace)
+                    Console.Write("*");
                 secretWordInput += key.KeyChar;
             }
 
             string secretWord = Validator.ForceUserToGiveValidSecretWord(secretWordInput);
             secretWord = secretWord.ToUpper();
 
-            // Create an array of dashes, the length of the secret word
+            // Create an array of dashes, the length of the secret word (to preview the answer to the user)
             char[] answerPreview = new char[secretWord.Length];
             for (int i = 0; i < answerPreview.Length; i++)
             {
                 answerPreview[i] = '_';
             }
 
-
-
             // Main Gameplay:
             while (livesRemaining > 0 && !playerWon)
             {
                 // Introduce game:
                 Console.WriteLine();
-                Console.WriteLine($"{playerTwoName}, you have {livesRemaining} lives left. Guess a letter from the secret word (in upper case)");
+                Console.WriteLine($"{playerTwoName}, you have {livesRemaining} lives left. Guess a letter from the secret word");
 
                 // Write their guess so far:
                 Console.WriteLine("So far, you've guessed:");
@@ -68,13 +66,14 @@ namespace Hangman
 
                 // Store the guess
                 char guess = Console.ReadKey().KeyChar;
-
+            
                 // If they're wrong, subtract a life
                 if (!Validator.IsGuessCorrect(secretWord, guess))
                     livesRemaining--;
 
                 // If they're right, add letter to player2's construction of the word, in every position where that letter appears (this is displayed back to them at the start of the while loop)
-                for (int i = 0; i < secretWordInput.Length; i++)
+                guess = char.ToUpper(guess);
+                for (int i = 0; i < secretWord.Length; i++)
                 {
                     if (secretWord[i] == guess)
                         answerPreview[i] = guess;
@@ -104,6 +103,8 @@ namespace Hangman
                 Console.WriteLine();
                 Artist.PaintMan(0);
             }
+        Console.WriteLine("Press any key to exit.");
+        Console.ReadLine();
         }
     }
 }

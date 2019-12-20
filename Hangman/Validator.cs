@@ -14,8 +14,20 @@ namespace Hangman
             
             while (input.Contains(" ") || !Regex.IsMatch(input, @"^[a-zA-Z]+$") || numberOfUniqueCharacters > 9)
             {
+                Console.WriteLine();
                 Console.WriteLine("That's not valid.");
-                input = Console.ReadLine();
+
+                input = null;
+                while (true)
+                {
+                    var key = System.Console.ReadKey(true);
+                    if (key.Key == ConsoleKey.Enter)
+                        break;
+                    if (key.Key != ConsoleKey.Backspace)
+                        Console.Write("*");
+                    input += key.KeyChar;
+                }
+
                 numberOfUniqueCharacters = (new HashSet<char>(input)).Count;
             }
 
@@ -25,6 +37,9 @@ namespace Hangman
         public static bool IsGuessCorrect(string secretWord, char guess)
         {
             Console.WriteLine();
+
+            if (char.IsLetter(guess))
+                guess = char.ToUpper(guess);
 
             if (!secretWord.Contains(guess)) 
             {
