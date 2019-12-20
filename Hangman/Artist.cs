@@ -6,7 +6,6 @@ namespace Hangman
 {
     class Artist
     {
-        // Create an array for each state of 9 lives. In a given array, each element should be a line of the picture
         static string[] eightLives =
         {  "         ",
            "      |  ",

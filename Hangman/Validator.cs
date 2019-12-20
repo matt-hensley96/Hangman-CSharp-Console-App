@@ -7,7 +7,7 @@ namespace Hangman
 {
     internal static class Validator
     {
-        public static string GetValidSecretWord(string secretWordInput)
+        public static string ForceUserToGiveValidSecretWord(string secretWordInput)
         {
             var input = secretWordInput;
             var numberOfUniqueCharacters = (new HashSet<char>(input)).Count;
@@ -22,11 +22,11 @@ namespace Hangman
             return input;
         }
 
-        public static bool IsGuessCorrect(string secretWordInput, char guess)
+        public static bool IsGuessCorrect(string secretWord, char guess)
         {
             Console.WriteLine();
 
-            if (!secretWordInput.Contains(guess)) 
+            if (!secretWord.Contains(guess)) 
             {
                 Console.WriteLine("That letter isn't in the secret word!");
                 return false;

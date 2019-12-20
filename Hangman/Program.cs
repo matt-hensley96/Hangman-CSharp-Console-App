@@ -5,8 +5,7 @@ namespace Hangman
     class Program
     {
         static void Main(string[] args)
-        // IN PROGRESS: Show the hangman using ASCII characters (see Artist class)
-        // TO DO: Obscure the letters in the secret word (as the user types them) using * characters (like a password)
+        // IN PROGRESS: Obscure the letters in the secret word (as the user types them) using * characters (like a password)
         // TO DO: Make a 1-player option?
         {
             Presenter.Greeting();
@@ -23,14 +22,23 @@ namespace Hangman
             Console.WriteLine("Player 2, enter your name, then hit Enter.");
             string playerTwoName = Console.ReadLine();
 
-
-
-
             // Store the secret word
             Console.WriteLine();
             Console.WriteLine($"{playerOneName}, type a secret word, then hit Enter. It must be one word, containing letters only (less than 10).");
-            string secretWordInput = Console.ReadLine().ToUpper();
-            string secretWord = Validator.GetValidSecretWord(secretWordInput);
+            
+            
+            string secretWordInput = null;
+            while (true)
+            {
+                var key = System.Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Enter)
+                    break;
+                Console.Write("*");
+                secretWordInput += key.KeyChar;
+            }
+
+            string secretWord = Validator.ForceUserToGiveValidSecretWord(secretWordInput);
+            secretWord = secretWord.ToUpper();
 
             // Create an array of dashes, the length of the secret word
             char[] answerPreview = new char[secretWord.Length];
@@ -44,7 +52,7 @@ namespace Hangman
             // Main Gameplay:
             while (livesRemaining > 0 && !playerWon)
             {
-                // Presenter:
+                // Introduce game:
                 Console.WriteLine();
                 Console.WriteLine($"{playerTwoName}, you have {livesRemaining} lives left. Guess a letter from the secret word (in upper case)");
 
