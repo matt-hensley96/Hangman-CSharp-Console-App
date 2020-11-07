@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Hangman
@@ -9,26 +8,29 @@ namespace Hangman
     {
         public static string ForceUserToGiveValidSecretWord(string secretWordInput)
         {
-            var input = secretWordInput;
-            var numberOfUniqueCharacters = (new HashSet<char>(input)).Count;
-            
+            string input = secretWordInput;
+            int numberOfUniqueCharacters = new HashSet<char>(input).Count;
+
             while (input.Contains(" ") || !Regex.IsMatch(input, @"^[a-zA-Z]+$") || numberOfUniqueCharacters > 9)
             {
                 Console.WriteLine();
                 Console.WriteLine("That's not valid.");
-
                 input = null;
+
                 while (true)
                 {
-                    var key = System.Console.ReadKey(true);
+                    ConsoleKeyInfo key = Console.ReadKey(true);
+
                     if (key.Key == ConsoleKey.Enter)
                         break;
+
                     if (key.Key != ConsoleKey.Backspace)
                         Console.Write("*");
+
                     input += key.KeyChar;
                 }
 
-                numberOfUniqueCharacters = (new HashSet<char>(input)).Count;
+                numberOfUniqueCharacters = new HashSet<char>(input).Count;
             }
 
             return input;
@@ -41,7 +43,7 @@ namespace Hangman
             if (char.IsLetter(guess))
                 guess = char.ToUpper(guess);
 
-            if (!secretWord.Contains(guess)) 
+            if (!secretWord.Contains(guess))
             {
                 Console.WriteLine("That letter isn't in the secret word!");
                 return false;

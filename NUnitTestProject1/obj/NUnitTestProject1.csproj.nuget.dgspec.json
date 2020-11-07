@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Code\\Projects\\Console Apps\\4_Hangman\\Hangman\\Hangman.csproj": {}
+    "D:\\Code\\Projects\\Console Apps\\4_Hangman\\NUnitTestProject1\\NUnitTestProject1.csproj": {}
   },
   "projects": {
-    "D:\\Code\\Projects\\Console Apps\\4_Hangman\\Hangman\\Hangman.csproj": {
+    "D:\\Code\\Projects\\Console Apps\\4_Hangman\\NUnitTestProject1\\NUnitTestProject1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Code\\Projects\\Console Apps\\4_Hangman\\Hangman\\Hangman.csproj",
-        "projectName": "Hangman",
-        "projectPath": "D:\\Code\\Projects\\Console Apps\\4_Hangman\\Hangman\\Hangman.csproj",
+        "projectUniqueName": "D:\\Code\\Projects\\Console Apps\\4_Hangman\\NUnitTestProject1\\NUnitTestProject1.csproj",
+        "projectName": "NUnitTestProject1",
+        "projectPath": "D:\\Code\\Projects\\Console Apps\\4_Hangman\\NUnitTestProject1\\NUnitTestProject1.csproj",
         "packagesPath": "C:\\Users\\mhensley\\.nuget\\packages\\",
-        "outputPath": "D:\\Code\\Projects\\Console Apps\\4_Hangman\\Hangman\\obj\\",
+        "outputPath": "D:\\Code\\Projects\\Console Apps\\4_Hangman\\NUnitTestProject1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -42,6 +42,20 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.2.0, )"
+            },
+            "NUnit3TestAdapter": {
+              "target": "Package",
+              "version": "[3.15.1, )"
+            },
+            "nunit": {
+              "target": "Package",
+              "version": "[3.12.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

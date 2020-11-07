@@ -2,19 +2,17 @@
 
 namespace Hangman
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            int livesRemaining = 8;
-            bool playerWon = false;
+            var livesRemaining = 8;
+            var playerWon = false;
 
             Presenter.Greeting();
 
             string[] playerNames = Presenter.GetPlayerNames();
-
             string secretWord = Presenter.GetSecretWord(playerNames);
-
             char[] answerPreview = Presenter.CreateAnswerPreview(secretWord);
 
             while (livesRemaining > 0 && !playerWon)
@@ -22,19 +20,19 @@ namespace Hangman
                 Presenter.AskForGuess(playerNames, livesRemaining, answerPreview);
                 char guess = Console.ReadKey().KeyChar;
                 Console.Clear();
-                
+
                 if (!Validator.IsGuessCorrect(secretWord, guess))
                     livesRemaining--;
 
                 Presenter.UpdateAnswerPreview(guess, secretWord, answerPreview);
 
-                string completedAnswer = new string(answerPreview);
+                var completedAnswer = new string(answerPreview);
+
                 if (completedAnswer == secretWord)
                     playerWon = true;
             }
 
             Presenter.GiveResults(playerNames, answerPreview, playerWon);
-        
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
         }
