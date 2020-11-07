@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace Hangman
 {
     internal static class Presenter
     {
-        public static void Greeting()
+        public static void ShowNameOfGame()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
 
@@ -15,7 +16,13 @@ namespace Hangman
                 .Append("HANGMAN")
                 .AppendLine()
                 .Append('-', 8);
+
             Console.WriteLine(header);
+        }
+
+        internal static void SetUpGame()
+        {
+
         }
 
         public static string[] GetPlayerNames()
@@ -27,39 +34,33 @@ namespace Hangman
 
             Console.WriteLine();
             Console.WriteLine("Player 2, enter your name, then hit Enter.");
+
             playerNames[1] = Console.ReadLine();
 
             Console.Clear();
+
             return playerNames;
         }
 
-        public static string GetSecretWord(string[] playerNames)
+        public static string GetSecretWord(string playerOne)
         {
-            Console.WriteLine();
-            Console.WriteLine($"{playerNames[0]}, type a secret word, then hit Enter. It must be one word, containing letters only (less than 10 unique letters).");
+            Console.WriteLine($"{playerOne}, type a secret word, then hit Enter. It must be one word, containing " +
+                              "letters only (less than 10 unique letters).");
 
-            string secretWordInput = null;
-            while (true)
+            bool secretWordIsValid = default;
+            string secretWordInput = default;
+
+            while (!secretWordIsValid)
             {
-                ConsoleKeyInfo key = Console.ReadKey(true);
-
-                if (key.Key != ConsoleKey.Backspace)
-                    Console.Write("*");
-
-                if (key.Key == ConsoleKey.Enter)
-                    break;
-
-                secretWordInput += key.KeyChar;
+                secretWordInput = GetObscuredInput();
+                Console.Clear();
+                secretWordIsValid = Validator.IsSecretWordValid(secretWordInput);
             }
 
-            string secretWord = Validator.ForceUserToGiveValidSecretWord(secretWordInput).ToUpper();
-            Console.WriteLine();
-            Console.Clear();
-
-            return secretWord;
+            return secretWordInput.ToUpper();
         }
 
-        public static char[] CreateAnswerPreview(string secretWord)
+        public static char[] GetAnswerPreview(string secretWord)
         {
             var answerPreview = new char[secretWord.Length];
 
@@ -69,31 +70,73 @@ namespace Hangman
             return answerPreview;
         }
 
-        public static char[] UpdateAnswerPreview(char guess, string secretWord, char[] answerPreview)
+        internal static void PresentGame(string[] playerNames, string secretWord, char[] answerPreview)
+        {
+            var livesRemaining = 8;
+            bool playerWon = default;
+            var guessesSubmittedSoFar = new List<char>();
+
+            while (livesRemaining > 0 && !playerWon)
+            {
+                char guess = GetGuess(playerNames, livesRemaining, guessesSubmittedSoFar, answerPreview);
+                guessesSubmittedSoFar.Add(char.ToUpper(guess));
+
+                Console.Clear();
+
+                if (!Validator.IsGuessCorrect(secretWord, guess))
+                    livesRemaining--;
+
+                UpdateAnswerPreview(guess, secretWord, answerPreview);
+
+                var completedAnswer = new string(answerPreview);
+
+                if (completedAnswer == secretWord)
+                    playerWon = true;
+            }
+
+            GiveResults(playerNames, answerPreview, playerWon);
+        }
+
+        private static void UpdateAnswerPreview(char guess, string secretWord, char[] answerPreview)
         {
             guess = char.ToUpper(guess);
 
             for (var i = 0; i < secretWord.Length; i++)
                 if (secretWord[i] == guess)
                     answerPreview[i] = guess;
-
-            return answerPreview;
         }
 
-        public static void AskForGuess(string[] playerNames, int livesRemaining, char[] answerPreview)
+        private static char GetGuess(string[] playerNames, int livesRemaining, List<char> guessesSubmittedSoFar, char[] answerPreview)
         {
-            Console.WriteLine();
             Console.WriteLine($"{playerNames[1]}, you have {livesRemaining} lives left. Guess a letter from the secret word");
-            Console.WriteLine("So far, you've guessed:");
+            Console.WriteLine("So far, you've guessed this much of the word correctly:");
 
-            foreach (char t in answerPreview)
-                Console.Write(t + " ");
+            foreach (char letter in answerPreview)
+                Console.Write(letter + " ");
+
+            Console.WriteLine();
+            Console.WriteLine("And you've already guessed these letters:");
+            foreach (char letter in guessesSubmittedSoFar)
+                Console.Write(letter + "");
+            Console.WriteLine();
 
             Console.WriteLine();
             Artist.PaintMan(livesRemaining);
+
+            char guess = default;
+            bool guessIsValid = default;
+
+            while (!guessIsValid)
+            {
+                guess = Console.ReadKey().KeyChar;
+                Console.Clear();
+                guessIsValid = Validator.IsGuessValid(guess);
+            }
+
+            return guess;
         }
 
-        public static void GiveResults(string[] playerNames, char[] answerPreview, bool playerWon)
+        private static void GiveResults(string[] playerNames, char[] answerPreview, bool playerWon)
         {
             if (playerWon)
             {
@@ -114,6 +157,28 @@ namespace Hangman
                 Console.WriteLine();
                 Artist.PaintMan(0);
             }
+        }
+
+        private static string GetObscuredInput()
+        {
+            string secretWordInput = default;
+            var userIsStillTyping = true;
+
+            while (userIsStillTyping)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+
+                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                {
+                    Console.Write("*");
+                    secretWordInput += key.KeyChar;
+                }
+
+                if (key.Key == ConsoleKey.Enter)
+                    userIsStillTyping = false;
+            }
+
+            return secretWordInput;
         }
     }
 }

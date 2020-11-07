@@ -4,35 +4,17 @@ namespace Hangman
 {
     internal static class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
-            var livesRemaining = 8;
-            var playerWon = false;
-
-            Presenter.Greeting();
+            // TO DO: In Presenter.PlayGame(), Log the players guesses on the console in case they forget which letter's they already guessed
+            Presenter.ShowNameOfGame();
 
             string[] playerNames = Presenter.GetPlayerNames();
-            string secretWord = Presenter.GetSecretWord(playerNames);
-            char[] answerPreview = Presenter.CreateAnswerPreview(secretWord);
+            string secretWord = Presenter.GetSecretWord(playerNames[0]);
+            char[] answerPreview = Presenter.GetAnswerPreview(secretWord);
 
-            while (livesRemaining > 0 && !playerWon)
-            {
-                Presenter.AskForGuess(playerNames, livesRemaining, answerPreview);
-                char guess = Console.ReadKey().KeyChar;
-                Console.Clear();
+            Presenter.PresentGame(playerNames, secretWord, answerPreview);
 
-                if (!Validator.IsGuessCorrect(secretWord, guess))
-                    livesRemaining--;
-
-                Presenter.UpdateAnswerPreview(guess, secretWord, answerPreview);
-
-                var completedAnswer = new string(answerPreview);
-
-                if (completedAnswer == secretWord)
-                    playerWon = true;
-            }
-
-            Presenter.GiveResults(playerNames, answerPreview, playerWon);
             Console.WriteLine("Press any key to exit.");
             Console.ReadLine();
         }

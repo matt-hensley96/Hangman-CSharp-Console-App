@@ -1,56 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Hangman
 {
     internal static class Validator
     {
-        public static string ForceUserToGiveValidSecretWord(string secretWordInput)
+        public static bool IsSecretWordValid(string secretWordInput)
         {
-            string input = secretWordInput;
-            int numberOfUniqueCharacters = new HashSet<char>(input).Count;
+            if (!secretWordInput.Contains(" ") && Regex.IsMatch(secretWordInput, @"^[a-zA-Z]+$"))
+                return true;
 
-            while (input.Contains(" ") || !Regex.IsMatch(input, @"^[a-zA-Z]+$") || numberOfUniqueCharacters > 9)
-            {
-                Console.WriteLine();
-                Console.WriteLine("That's not valid.");
-                input = null;
-
-                while (true)
-                {
-                    ConsoleKeyInfo key = Console.ReadKey(true);
-
-                    if (key.Key == ConsoleKey.Enter)
-                        break;
-
-                    if (key.Key != ConsoleKey.Backspace)
-                        Console.Write("*");
-
-                    input += key.KeyChar;
-                }
-
-                numberOfUniqueCharacters = new HashSet<char>(input).Count;
-            }
-
-            return input;
+            Console.WriteLine("That's not valid. It should be a single word containing letters only- Try again.");
+            return false;
         }
 
         public static bool IsGuessCorrect(string secretWord, char guess)
         {
-            Console.WriteLine();
-
             if (char.IsLetter(guess))
                 guess = char.ToUpper(guess);
 
             if (!secretWord.Contains(guess))
             {
                 Console.WriteLine("That letter isn't in the secret word!");
+                Console.WriteLine();
                 return false;
             }
 
             Console.WriteLine("CORRECT!");
+            Console.WriteLine();
             return true;
+        }
+
+        public static bool IsGuessValid(in char guess)
+        {
+            if (char.IsLetter(guess))
+                return true;
+
+            Console.WriteLine("That's not a valid guess. You should have guessed a letter- Try again!");
+            return false;
         }
     }
 }
