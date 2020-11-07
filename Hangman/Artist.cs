@@ -1,143 +1,126 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Hangman
 {
-    class Artist
+    internal static class Artist
     {
-        static string[] eightLives =
-        {  "         ",
-           "      |  ",
-           "      |  ",
-           "      |  ",
-           "      |  ",
-           "      |  ",
-           "========="
-        };
-
-        static string[] sevenLives =
-        {  "  +---+  ",
-           "      |  ",
-           "      |  ",
-           "      |  ",
-           "      |  ",
-           "      |  ",
-           "========="
-        };
-
-        static string[] sixLives =
-        {  "  +---+  ",
-           "  |   |  ",
-           "      |  ",
-           "      |  ",
-           "      |  ",
-           "      |  ",
-           "========="
-        };
-
-        static string[] fiveLives =
-        {  "  +---+  ",
-           "  |   |  ",
-           "  O   |  ",
-           "      |  ",
-           "      |  ",
-           "      |  ",
-           "========="
-        };
-
-        static string[] fourLives =
-        {  "  +---+  ",
-           "  |   |  ",
-           "  O   |  ",
-           "  |   |  ",
-           "      |  ",
-           "      |  ",
-           "========="
-        };
-
-        static string[] threeLives =
-        {  "  +---+  ",
-           "  |   |  ",
-           "  O   |  ",
-           " /|   |  ",
-           "      |  ",
-           "      |  ",
-           "========="
-        };
-
-        static string[] twoLives =
-        {  "  +---+  ",
-           "  |   |  ",
-           "  O   |  ",
-          @" /|\  |  ",
-           "      |  ",
-           "      |  ",
-           "========="
-        };
-
-        static string[] oneLives =
-        {  "  +---+  ",
-           "  |   |  ",
-           "  O   |  ",
-          @" /|\  |  ",
-           " /    |  ",
-           "      |  ",
-           "========="
-        };
-
-        static string[] zeroLives =
-        {  "  +---+  ",
-           "  |   |  ",
-           "  O   |  ",
-          @" /|\  |  ",
-          @" / \  |  ",
-           "      |  ",
-           "========="
-        };
-
-        public static void PaintMan(int livesRemaining) 
+        private static readonly string[] _eightLives =
         {
-            string[] currentDrawing = new string[7];
+            "         ",
+            "      |  ",
+            "      |  ",
+            "      |  ",
+            "      |  ",
+            "      |  ",
+            "========="
+        };
 
-            switch (livesRemaining)
+        private static readonly string[] _sevenLives =
+        {
+            "  +---+  ",
+            "      |  ",
+            "      |  ",
+            "      |  ",
+            "      |  ",
+            "      |  ",
+            "========="
+        };
+
+        private static readonly string[] _sixLives =
+        {
+            "  +---+  ",
+            "  |   |  ",
+            "      |  ",
+            "      |  ",
+            "      |  ",
+            "      |  ",
+            "========="
+        };
+
+        private static readonly string[] _fiveLives =
+        {
+            "  +---+  ",
+            "  |   |  ",
+            "  O   |  ",
+            "      |  ",
+            "      |  ",
+            "      |  ",
+            "========="
+        };
+
+        private static readonly string[] _fourLives =
+        {
+            "  +---+  ",
+            "  |   |  ",
+            "  O   |  ",
+            "  |   |  ",
+            "      |  ",
+            "      |  ",
+            "========="
+        };
+
+        private static readonly string[] _threeLives =
+        {
+            "  +---+  ",
+            "  |   |  ",
+            "  O   |  ",
+            " /|   |  ",
+            "      |  ",
+            "      |  ",
+            "========="
+        };
+
+        private static readonly string[] _twoLives =
+        {
+            "  +---+  ",
+            "  |   |  ",
+            "  O   |  ",
+            @" /|\  |  ",
+            "      |  ",
+            "      |  ",
+            "========="
+        };
+
+        private static readonly string[] _oneLives =
+        {
+            "  +---+  ",
+            "  |   |  ",
+            "  O   |  ",
+            @" /|\  |  ",
+            " /    |  ",
+            "      |  ",
+            "========="
+        };
+
+        private static readonly string[] _zeroLives =
+        {
+            "  +---+  ",
+            "  |   |  ",
+            "  O   |  ",
+            @" /|\  |  ",
+            @" / \  |  ",
+            "      |  ",
+            "========="
+        };
+
+        public static void PaintMan(int livesRemaining)
+        {
+            string[] currentDrawing = livesRemaining switch
             {
-                case 8:
-                    currentDrawing = eightLives;
-                    break;
-                case 7:
-                    currentDrawing = sevenLives;
-                    break;
-                case 6:
-                    currentDrawing = sixLives;
-                    break;
-                case 5:
-                    currentDrawing = fiveLives;
-                    break;
-                case 4:
-                    currentDrawing = fourLives;
-                    break;
-                case 3:
-                    currentDrawing = threeLives;
-                    break;
-                case 2:
-                    currentDrawing = twoLives;
-                    break;
-                case 1:
-                    currentDrawing = oneLives;
-                    break;
-                case 0:
-                    currentDrawing = zeroLives;
-                    break;
-            }
+                8 => _eightLives,
+                7 => _sevenLives,
+                6 => _sixLives,
+                5 => _fiveLives,
+                4 => _fourLives,
+                3 => _threeLives,
+                2 => _twoLives,
+                1 => _oneLives,
+                0 => _zeroLives,
+                _ => new string[7]
+            };
 
-
-            // After each guess, call this method loop to through the array for livesRemaining, doing a console.writeline on each element
             foreach (string line in currentDrawing)
-            {
                 Console.WriteLine(line);
-            }
-
         }
     }
 }
