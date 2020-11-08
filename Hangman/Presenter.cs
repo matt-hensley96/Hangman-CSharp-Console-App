@@ -39,8 +39,8 @@ namespace Hangman
 
         public static string GetSecretWord(string playerOne)
         {
-            Console.WriteLine($"{playerOne}, type a secret word, then hit Enter. It must be one word, containing " +
-                              "letters only (less than 10 unique letters).");
+            Console.WriteLine($"{playerOne}, type a secret word, then hit Enter. ");
+            Console.WriteLine("It must be one word, containing letters only (less than 10 unique letters).");
 
             bool secretWordIsValid = default;
             string secretWordInput = default;
@@ -83,13 +83,14 @@ namespace Hangman
 
                 UpdateAnswerPreview(guess, secretWord, answerPreview);
 
-                var completedAnswer = new string(answerPreview);
+                var lettersGuessedCorrectly = new string(answerPreview);
 
-                if (completedAnswer == secretWord)
+                if (lettersGuessedCorrectly == secretWord)
                     playerWon = true;
             }
 
-            GiveResults(playerNames, answerPreview, playerWon);
+            GiveResults(playerNames, answerPreview, playerWon, secretWord);
+            Console.WriteLine();
         }
 
         private static string GetObscuredInput()
@@ -126,15 +127,17 @@ namespace Hangman
         private static char GetGuess(string[] playerNames, int livesRemaining, List<char> guessesSubmittedSoFar, char[] answerPreview)
         {
             Console.WriteLine($"{playerNames[1]}, you have {livesRemaining} lives left. Guess a letter from the secret word");
+            Console.WriteLine();
             Console.WriteLine("So far, you've guessed this much of the word correctly:");
 
             foreach (char letter in answerPreview)
                 Console.Write(letter + " ");
 
             Console.WriteLine();
+            Console.WriteLine();
             Console.WriteLine("And you've already guessed these letters:");
             foreach (char letter in guessesSubmittedSoFar)
-                Console.Write(letter + "");
+                Console.Write(letter + " ");
             Console.WriteLine();
 
             Console.WriteLine();
@@ -146,14 +149,13 @@ namespace Hangman
             while (!guessIsValid)
             {
                 guess = Console.ReadKey().KeyChar;
-                Console.Clear();
-                guessIsValid = Validator.IsGuessValid(guess);
+                guessIsValid = Validator.IsGuessValid(guess, guessesSubmittedSoFar);
             }
 
             return guess;
         }
 
-        private static void GiveResults(string[] playerNames, char[] answerPreview, bool playerWon)
+        private static void GiveResults(string[] playerNames, char[] answerPreview, bool playerWon, string secretWord)
         {
             if (playerWon)
             {
@@ -164,12 +166,11 @@ namespace Hangman
                     Console.Write(t + " ");
 
                 Console.WriteLine();
-                Console.WriteLine();
             }
             else
             {
-                Console.WriteLine();
                 Console.WriteLine($"GAME OVER!!! You ran out of lives {playerNames[1]}!");
+                Console.WriteLine($"The secret word was: {secretWord}");
                 Console.WriteLine();
                 Artist.PaintMan(0);
             }

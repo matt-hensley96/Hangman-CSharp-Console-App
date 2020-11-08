@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace Hangman
@@ -31,12 +32,14 @@ namespace Hangman
             return true;
         }
 
-        public static bool IsGuessValid(in char guess)
+        public static bool IsGuessValid(in char guess, List<char> guessesSubmittedSoFar)
         {
-            if (char.IsLetter(guess))
+            if (char.IsLetter(guess) && !guessesSubmittedSoFar.Contains(char.ToUpper(guess)))
                 return true;
 
-            Console.WriteLine("That's not a valid guess. You should have guessed a letter- Try again!");
+            Console.WriteLine();
+            Console.WriteLine("That's not a valid guess.");
+            Console.WriteLine("You should have guessed a letter (and not one that you've already guessed) - Try again!");
             return false;
         }
     }
