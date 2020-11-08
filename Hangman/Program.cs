@@ -6,17 +6,25 @@ namespace Hangman
     {
         private static void Main()
         {
-            // TO DO: In Presenter.PlayGame(), Log the players guesses on the console in case they forget which letter's they already guessed
-            Presenter.ShowNameOfGame();
+            bool playing = true;
 
-            string[] playerNames = Presenter.GetPlayerNames();
-            string secretWord = Presenter.GetSecretWord(playerNames[0]);
-            char[] answerPreview = Presenter.GetAnswerPreview(secretWord);
+            while (playing)
+            {
+                Presenter.ShowNameOfGame();
 
-            Presenter.PresentGame(playerNames, secretWord, answerPreview);
+                string[] playerNames = Presenter.GetPlayerNames();
+                string secretWord = Presenter.GetSecretWord(playerNames[0]);
+                char[] answerPreview = Presenter.GetAnswerPreview(secretWord);
 
-            Console.WriteLine("Press any key to exit.");
-            Console.ReadLine();
+                Presenter.PresentGame(playerNames, secretWord, answerPreview);
+
+                Console.WriteLine("Press enter to play again!");
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                if (key.Key == ConsoleKey.Enter)
+                    Console.Clear();
+                else
+                    playing = false;
+            }
         }
     }
 }

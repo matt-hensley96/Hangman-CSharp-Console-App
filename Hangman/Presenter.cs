@@ -20,11 +20,6 @@ namespace Hangman
             Console.WriteLine(header);
         }
 
-        internal static void SetUpGame()
-        {
-
-        }
-
         public static string[] GetPlayerNames()
         {
             var playerNames = new string[2];
@@ -33,8 +28,8 @@ namespace Hangman
             playerNames[0] = Console.ReadLine();
 
             Console.WriteLine();
-            Console.WriteLine("Player 2, enter your name, then hit Enter.");
 
+            Console.WriteLine("Player 2, enter your name, then hit Enter.");
             playerNames[1] = Console.ReadLine();
 
             Console.Clear();
@@ -97,6 +92,28 @@ namespace Hangman
             GiveResults(playerNames, answerPreview, playerWon);
         }
 
+        private static string GetObscuredInput()
+        {
+            string secretWordInput = default;
+            var userIsStillTyping = true;
+
+            while (userIsStillTyping)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+
+                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                {
+                    Console.Write("*");
+                    secretWordInput += key.KeyChar;
+                }
+
+                if (key.Key == ConsoleKey.Enter)
+                    userIsStillTyping = false;
+            }
+
+            return secretWordInput;
+        }
+
         private static void UpdateAnswerPreview(char guess, string secretWord, char[] answerPreview)
         {
             guess = char.ToUpper(guess);
@@ -149,7 +166,6 @@ namespace Hangman
                 Console.WriteLine();
                 Console.WriteLine();
             }
-
             else
             {
                 Console.WriteLine();
@@ -157,28 +173,6 @@ namespace Hangman
                 Console.WriteLine();
                 Artist.PaintMan(0);
             }
-        }
-
-        private static string GetObscuredInput()
-        {
-            string secretWordInput = default;
-            var userIsStillTyping = true;
-
-            while (userIsStillTyping)
-            {
-                ConsoleKeyInfo key = Console.ReadKey(true);
-
-                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
-                {
-                    Console.Write("*");
-                    secretWordInput += key.KeyChar;
-                }
-
-                if (key.Key == ConsoleKey.Enter)
-                    userIsStillTyping = false;
-            }
-
-            return secretWordInput;
         }
     }
 }

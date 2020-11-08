@@ -4,7 +4,7 @@ namespace Hangman
 {
     internal static class Artist
     {
-        private static readonly string[] _eightLives =
+        private static readonly string[] _drawingOfHangmanWithEightLives =
         {
             "         ",
             "      |  ",
@@ -15,7 +15,7 @@ namespace Hangman
             "========="
         };
 
-        private static readonly string[] _sevenLives =
+        private static readonly string[] _drawingOfHangmanWithSevenLives =
         {
             "  +---+  ",
             "      |  ",
@@ -26,40 +26,40 @@ namespace Hangman
             "========="
         };
 
-        private static readonly string[] _sixLives =
-        {
-            "  +---+  ",
-            "  |   |  ",
-            "      |  ",
-            "      |  ",
-            "      |  ",
-            "      |  ",
-            "========="
-        };
-
-        private static readonly string[] _fiveLives =
+        private static readonly string[] _drawingOfHangmanWithSixLives =
         {
             "  +---+  ",
             "  |   |  ",
-            "  O   |  ",
+            "      |  ",
             "      |  ",
             "      |  ",
             "      |  ",
             "========="
         };
 
-        private static readonly string[] _fourLives =
+        private static readonly string[] _drawingOfHangmanWithFiveLives =
         {
             "  +---+  ",
             "  |   |  ",
             "  O   |  ",
+            "      |  ",
+            "      |  ",
+            "      |  ",
+            "========="
+        };
+
+        private static readonly string[] _drawingOfHangmanWithFourLives =
+        {
+            "  +---+  ",
+            "  |   |  ",
+            "  O   |  ",
             "  |   |  ",
             "      |  ",
             "      |  ",
             "========="
         };
 
-        private static readonly string[] _threeLives =
+        private static readonly string[] _drawingOfHangmanWithThreeLives =
         {
             "  +---+  ",
             "  |   |  ",
@@ -70,7 +70,7 @@ namespace Hangman
             "========="
         };
 
-        private static readonly string[] _twoLives =
+        private static readonly string[] _drawingOfHangmanWithTwoLives =
         {
             "  +---+  ",
             "  |   |  ",
@@ -81,7 +81,7 @@ namespace Hangman
             "========="
         };
 
-        private static readonly string[] _oneLives =
+        private static readonly string[] _drawingOfHangmanWithOneLife =
         {
             "  +---+  ",
             "  |   |  ",
@@ -92,7 +92,7 @@ namespace Hangman
             "========="
         };
 
-        private static readonly string[] _zeroLives =
+        private static readonly string[] _drawingOfHangmanWithZeroLives =
         {
             "  +---+  ",
             "  |   |  ",
@@ -107,15 +107,15 @@ namespace Hangman
         {
             string[] currentDrawing = livesRemaining switch
             {
-                8 => _eightLives,
-                7 => _sevenLives,
-                6 => _sixLives,
-                5 => _fiveLives,
-                4 => _fourLives,
-                3 => _threeLives,
-                2 => _twoLives,
-                1 => _oneLives,
-                0 => _zeroLives,
+                8 => _drawingOfHangmanWithEightLives,
+                7 => _drawingOfHangmanWithSevenLives,
+                6 => _drawingOfHangmanWithSixLives,
+                5 => _drawingOfHangmanWithFiveLives,
+                4 => _drawingOfHangmanWithFourLives,
+                3 => _drawingOfHangmanWithThreeLives,
+                2 => _drawingOfHangmanWithTwoLives,
+                1 => _drawingOfHangmanWithOneLife,
+                0 => _drawingOfHangmanWithZeroLives,
                 _ => new string[7]
             };
 
